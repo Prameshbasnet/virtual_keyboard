@@ -1,41 +1,41 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# 📱 Virtual Keyboard
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
+A customizable on-screen **virtual keyboard widget** for Flutter with multiple layouts, input validation, and styling options.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
+---
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+## 🚀 Features
 
-## Features
+- 🔠 **Alphanumeric**, 🔢 **Numeric**, 🔣 **Symbolic**, and 🧪 **Dual layout** support
+- 🎛 Customizable keys (including action keys like ⌫, ⇧, ⏎, SPACE)
+- ✨ **Shift toggle** for uppercase input
+- 🔍 RegExp-based validation to control allowed input
+- 🎨 Customizable key colors, text styles, and key builder override
+- 💡 Works on mobile, web, desktop (Windows/Linux/macOS)
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+---
 
-## Getting started
+## 🖼 Screenshots
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+### 🔤 Alphanumeric Keyboard
 
-## Usage
+![Alphanumeric Keyboard](assets/AlphanumericKeyboard.png)
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+### 🔢 Dual Keyboard
 
-```dart
-const like = 'sample';
+![Dual Keyboard](assets/DualKeyboard.png)
+
+### 🔢 Numeric Keyboard
+
+## ![Numeric Keyboard](assets/NumericKeyboard.png)
+
+## 📦 Installation
+
+### From GitHub
+
+```yaml
+dependencies:
+  virtual_keyboard:
+    git:
+      url: https://github.com/Prameshbasnet/virtual_keyboard.git
 ```
-
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
-# virtual_keyboard
-# virtual_keyboard

@@ -30,22 +30,21 @@ class VirtualKeyboard extends StatefulWidget {
 }
 
 class _VirtualKeyboardState extends State<VirtualKeyboard> {
-  Widget Function(BuildContext context, VirtualKeyboardKey key)? builder;
   late RegExp exp;
   late bool alwaysCaps;
-  TextSelection? cursorPosition;
   late double fontSize;
   late double height;
-  bool isShiftEnabled = false;
   late double keyHeight;
   late double keySpacing;
-  late bool longPress;
   late double maxRowWidth;
   late Color textColor;
   late TextEditingController textController;
   late TextStyle textStyle;
-  VirtualKeyboardType? type;
   late double width;
+  bool isShiftEnabled = false;
+  bool longPress = false;
+  VirtualKeyboardType? type;
+  TextSelection? cursorPosition;
 
   @override
   void didUpdateWidget(VirtualKeyboard oldWidget) {
@@ -71,20 +70,20 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
     fontSize = widget.fontSize;
     alwaysCaps = widget.alwaysCaps;
     exp = widget.exp;
-    textController.addListener(textControllerEvent);
+
+    textController.addListener(() {
+      if (textController.selection.toString() != "TextSelection.invalid") {
+        cursorPosition = textController.selection;
+      } else {
+        cursorPosition ??= const TextSelection(baseOffset: 0, extentOffset: 0);
+      }
+    });
+
     textStyle = TextStyle(
       fontWeight: FontWeight.w600,
       fontSize: fontSize,
       color: textColor,
     );
-  }
-
-  void textControllerEvent() {
-    if (textController.selection.toString() != "TextSelection.invalid") {
-      cursorPosition = textController.selection;
-    } else {
-      cursorPosition ??= TextSelection(baseOffset: 0, extentOffset: 0);
-    }
   }
 
   Widget _keyLayout(List<List<VirtualKeyboardKey>> layout, RegExp exp) {
@@ -101,7 +100,6 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
       width: width,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: _rows(layout),
       ),
     );
@@ -120,11 +118,11 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
         int colNum = colEntry.key;
         VirtualKeyboardKey key = colEntry.value;
 
-        Widget keyWidget = builder == null
+        Widget keyWidget = widget.builder == null
             ? (key.keyType == VirtualKeyboardKeyType.String
                 ? _keyboardDefaultKey(key)
                 : _keyboardDefaultActionKey(key))
-            : builder!(context, key);
+            : widget.builder!(context, key);
 
         cols.add(keyWidget);
 
@@ -137,7 +135,6 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
           constraints: BoxConstraints(maxWidth: maxRowWidth),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: cols,
           ),
         ),
@@ -188,31 +185,27 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
                 .substring(0, textController.text.length - 1);
           }
           break;
-
         case VirtualKeyboardKeyAction.Return:
           textController.text += '\n';
           break;
-
         case VirtualKeyboardKeyAction.Space:
-          if (textController.text.isNotEmpty) {
+          String newText = textController.text + ' ';
+          RegExpMatch? match = exp.firstMatch(newText);
+          if (match != null && match[0] == newText) {
             textController.text += ' ';
           }
           break;
-
         case VirtualKeyboardKeyAction.Shift:
           if (!alwaysCaps) {
             setState(() => isShiftEnabled = !isShiftEnabled);
           }
           break;
-
         case VirtualKeyboardKeyAction.Alpha:
           setState(() => type = VirtualKeyboardType.Alphanumeric);
           break;
-
         case VirtualKeyboardKeyAction.Symbols:
           setState(() => type = VirtualKeyboardType.Symbolic);
           break;
-
         default:
           break;
       }
@@ -246,7 +239,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
     }
 
     Widget finalKey = Material(
-      color: Colors.grey.shade300,
+      color: Colors.grey,
       borderRadius: BorderRadius.circular(10),
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
@@ -291,7 +284,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
       case VirtualKeyboardType.Dual:
         return _keyLayout(dualLayout, exp);
       default:
-        return SizedBox.shrink();
+        return const SizedBox.shrink();
     }
   }
 }

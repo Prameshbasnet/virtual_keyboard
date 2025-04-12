@@ -1,3 +1,6 @@
-## 0.0.1
+## [1.0.0] - Initial release
 
-* TODO: Describe initial release.
+- Added Alphanumeric, Numeric, Symbolic, and Dual layouts.
+- Shift, backspace, space, and return support.
+- RegExp-based validation.
+- Example app included.
