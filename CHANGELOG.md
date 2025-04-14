@@ -1,4 +1,4 @@
-## [1.0.0] - Initial release
+## [1.0.1] - Initial release
 
 - Added Alphanumeric, Numeric, Symbolic, and Dual layouts.
 - Shift, backspace, space, and return support.
