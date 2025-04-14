@@ -1,4 +1,4 @@
-part of '../virtual_keyboard.dart';
+part of '../virtual_keyboard_plus.dart';
 
 List<List<VirtualKeyboardKey>> numericLayout = [
   [TextKey('1'), TextKey('2'), TextKey('3')],

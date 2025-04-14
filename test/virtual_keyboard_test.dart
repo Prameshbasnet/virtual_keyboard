@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:virtual_keyboard_plus/virtual_keyboard.dart';
+import 'package:virtual_keyboard_plus/virtual_keyboard_plus.dart';
 
 void main() {
   testWidgets('VirtualKeyboard builds and shows keys',
