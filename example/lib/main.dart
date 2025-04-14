@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
               child: TextField(controller: controller),
             ),
             VirtualKeyboard(
-              type: VirtualKeyboardType.Numeric,
+              type: VirtualKeyboardType.Alphanumeric,
               textController: controller,
               exp: RegExp(r'^[a-zA-Z0-9]*$'),
             ),

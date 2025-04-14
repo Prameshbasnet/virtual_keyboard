@@ -1,5 +1,8 @@
 part of '../virtual_keyboard_plus.dart';
 
+/// A layout for the numeric keyboard.
+///
+/// Contains keys for numbers (0-9), a decimal point, and a backspace key.
 List<List<VirtualKeyboardKey>> numericLayout = [
   [TextKey('1'), TextKey('2'), TextKey('3')],
   [TextKey('4'), TextKey('5'), TextKey('6')],
@@ -7,6 +10,9 @@ List<List<VirtualKeyboardKey>> numericLayout = [
   [TextKey('.'), TextKey('0'), ActionKey(VirtualKeyboardKeyAction.Backspace)],
 ];
 
+/// A layout for the standard US QWERTY keyboard.
+///
+/// Contains letters (a-z), and special keys like shift, space, return, and backspace.
 List<List<VirtualKeyboardKey>> usLayout = [
   [
     TextKey("q"),
@@ -51,6 +57,9 @@ List<List<VirtualKeyboardKey>> usLayout = [
   ],
 ];
 
+/// A layout for the symbol keyboard.
+///
+/// Contains symbols and punctuation marks, such as @, &, $, and punctuation marks.
 List<List<VirtualKeyboardKey>> symbolLayout = [
   [
     TextKey("1"),
@@ -95,6 +104,9 @@ List<List<VirtualKeyboardKey>> symbolLayout = [
   ],
 ];
 
+/// A combined layout for both alphanumeric and symbolic keys.
+///
+/// Includes numbers, letters (a-z), and symbols.
 List<List<VirtualKeyboardKey>> dualLayout = [
   [
     TextKey("1"),

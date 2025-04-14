@@ -2,7 +2,22 @@ part of '../virtual_keyboard_plus.dart';
 
 const double _virtualKeyboardDefaultHeight = 300;
 
+/// A custom virtual keyboard widget for Flutter.
+///
+/// This widget provides a virtual keyboard with different layouts (numeric, alphanumeric, symbolic)
+/// that can be used in text input fields. It is highly customizable with options like font size,
+/// text color, and the ability to define the input pattern using regular expressions.
 class VirtualKeyboard extends StatefulWidget {
+  /// Creates a new instance of the VirtualKeyboard.
+  ///
+  /// [type] specifies the keyboard layout type (numeric, alphanumeric, symbolic, or dual).
+  /// [textController] is the TextEditingController to control the text input field.
+  /// [builder] is an optional custom builder function for individual keys.
+  /// [height] is the height of the virtual keyboard (default: 300).
+  /// [textColor] specifies the text color (default: black).
+  /// [fontSize] sets the font size of the keyboard keys (default: 20).
+  /// [alwaysCaps] determines whether the keyboard always shows capital letters (default: false).
+  /// [exp] is a regular expression to validate the text input.
   const VirtualKeyboard({
     super.key,
     required this.type,
@@ -15,19 +30,35 @@ class VirtualKeyboard extends StatefulWidget {
     required this.exp,
   });
 
+  /// An optional custom builder for rendering individual keys on the keyboard.
   final Widget Function(BuildContext context, VirtualKeyboardKey key)? builder;
+
+  /// Determines whether the keyboard should always show capital letters.
   final bool alwaysCaps;
+
+  /// The font size of the text on the keyboard keys.
   final double fontSize;
+
+  /// The height of the virtual keyboard.
   final double height;
+
+  /// The text color of the keys.
   final Color textColor;
+
+  /// The [TextEditingController] to bind the keyboard input to a text field.
   final TextEditingController textController;
+
+  /// The layout type of the virtual keyboard (numeric, alphanumeric, symbolic, dual).
   final VirtualKeyboardType type;
+
+  /// A regular expression for validating the text input.
   final RegExp exp;
 
   @override
   State<StatefulWidget> createState() => _VirtualKeyboardState();
 }
 
+/// The state for the VirtualKeyboard widget, handling key input and layout.
 class _VirtualKeyboardState extends State<VirtualKeyboard> {
   late RegExp exp;
   late bool alwaysCaps;
@@ -70,6 +101,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
     alwaysCaps = widget.alwaysCaps;
     exp = widget.exp;
 
+    // Listen for changes in the text controller (e.g., cursor position).
     textController.addListener(() {
       if (textController.selection.toString() != "TextSelection.invalid") {
         cursorPosition = textController.selection;
@@ -78,6 +110,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
       }
     });
 
+    // Initialize the text style used for displaying keys.
     textStyle = TextStyle(
       fontWeight: FontWeight.w600,
       fontSize: fontSize,
@@ -85,6 +118,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
     );
   }
 
+  /// Generates the layout of keys based on the current keyboard type.
   Widget _keyLayout(List<List<VirtualKeyboardKey>> layout, RegExp exp) {
     keySpacing = 8.0;
     double totalSpacing = keySpacing * (layout.length + 1);
@@ -104,6 +138,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
     );
   }
 
+  /// Builds a list of rows for the keyboard layout, where each row contains keys.
   List<Widget> _rows(List<List<VirtualKeyboardKey>> layout) {
     List<Widget> rows = [];
 
@@ -117,6 +152,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
         int colNum = colEntry.key;
         VirtualKeyboardKey key = colEntry.value;
 
+        // Create either a regular key or a custom key using the builder if provided.
         Widget keyWidget = widget.builder == null
             ? (key.keyType == VirtualKeyboardKeyType.String
                 ? _keyboardDefaultKey(key)
@@ -145,6 +181,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
     return rows;
   }
 
+  /// Default implementation for rendering a text key (e.g., letters and numbers).
   Widget _keyboardDefaultKey(VirtualKeyboardKey key) {
     return Material(
       color: Colors.grey,
@@ -169,6 +206,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
     );
   }
 
+  /// Handles the logic when a key is pressed.
   void _onKeyPress(VirtualKeyboardKey key, RegExp exp) {
     if (key.keyType == VirtualKeyboardKeyType.String) {
       String newText = textController.text + key.text!;
@@ -211,6 +249,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
     }
   }
 
+  /// Default implementation for rendering an action key (e.g., backspace, shift, space).
   Widget _keyboardDefaultActionKey(VirtualKeyboardKey key) {
     String label;
 
@@ -240,7 +279,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
       borderRadius: BorderRadius.circular(10),
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
-        highlightColor: Colors.blue.withOpacity(0.3),
+        highlightColor: Colors.blue.withAlpha(76),
         onTap: () {
           if (key.action == VirtualKeyboardKeyAction.Shift && !alwaysCaps) {
             setState(() => isShiftEnabled = !isShiftEnabled);

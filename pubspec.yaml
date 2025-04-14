@@ -1,6 +1,6 @@
 name: virtual_keyboard_plus
 description: A customizable on-screen keyboard widget for Flutter with multiple layouts and RegExp-based input validation.
-version: 1.0.2
+version: 2.0.2
 homepage: https://github.com/Prameshbasnet/virtual_keyboard
 repository: https://github.com/Prameshbasnet/virtual_keyboard
 issue_tracker: https://github.com/Prameshbasnet/virtual_keyboard/issues
