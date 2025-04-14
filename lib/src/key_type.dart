@@ -1,5 +1,6 @@
-part of virtual_keyboard;
+part of '../virtual_keyboard.dart';
 
+// ignore: constant_identifier_names
 enum VirtualKeyboardKeyType { Action, String }
 
 class VirtualKeyboardKey {

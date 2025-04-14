@@ -1,11 +1,10 @@
-part of virtual_keyboard;
+part of '../virtual_keyboard.dart';
 
 const double _virtualKeyboardDefaultHeight = 300;
-const int _virtualKeyboardBackspaceEventPerioud = 250;
 
 class VirtualKeyboard extends StatefulWidget {
-  VirtualKeyboard({
-    Key? key,
+  const VirtualKeyboard({
+    super.key,
     required this.type,
     required this.textController,
     this.builder,
@@ -14,7 +13,7 @@ class VirtualKeyboard extends StatefulWidget {
     this.fontSize = 20,
     this.alwaysCaps = false,
     required this.exp,
-  }) : super(key: key);
+  });
 
   final Widget Function(BuildContext context, VirtualKeyboardKey key)? builder;
   final bool alwaysCaps;
@@ -95,7 +94,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
     maxRowWidth =
         ((maxLengthRow - 1) * keySpacing) + (maxLengthRow * keyHeight);
 
-    return Container(
+    return SizedBox(
       height: height,
       width: width,
       child: Column(
@@ -189,7 +188,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
           textController.text += '\n';
           break;
         case VirtualKeyboardKeyAction.Space:
-          String newText = textController.text + ' ';
+          String newText = '${textController.text} ';
           RegExpMatch? match = exp.firstMatch(newText);
           if (match != null && match[0] == newText) {
             textController.text += ' ';
@@ -234,8 +233,6 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
       case VirtualKeyboardKeyAction.Alpha:
         label = 'ABC';
         break;
-      default:
-        label = '?';
     }
 
     Widget finalKey = Material(
@@ -250,7 +247,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
           }
           _onKeyPress(key, exp);
         },
-        child: Container(
+        child: SizedBox(
           width: keyHeight,
           height: keyHeight,
           child: Center(
